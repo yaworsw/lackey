@@ -1,0 +1,23 @@
+{
+  "name": "yaworsw/lackey",
+  "description": "Task runner for PHP",
+  "keywords": [
+    "automation",
+    "build",
+    "task"
+  ],
+  "require": {
+
+  },
+  "require-dev": {
+
+  },
+  "autoload": {
+    "psr-0": {
+      "Lackey\\": "src"
+    }
+  },
+  "bin": [
+    "bin/lackey"
+  ]
+}

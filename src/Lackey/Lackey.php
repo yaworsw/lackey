@@ -7,6 +7,10 @@ class Lackey
 
     private static $instance;
 
+    protected $tasks = array();
+
+    protected $options = array();
+
     public function __construct()
     {
 
@@ -27,6 +31,11 @@ class Lackey
     }
 
     public function loadTask(Task $task, array $options = array())
+    {
+
+    }
+
+    public function task($name, $description, \Closure $closure, array $options = array())
     {
 
     }

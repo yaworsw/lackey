@@ -12,7 +12,11 @@ $lackey->loadTask(new Task\Exec(), array(
     ),
 ));
 
+$lackey->task('say-hello', 'Says hello to the world.  But really just to yourself.', function () {
+    echo 'Hello World!';
+});
+
 
 $lackey->alias('default', 'Builds the application.', array(
-    'exec',
+    'say-hello', 'exec:phpunit',
 ));

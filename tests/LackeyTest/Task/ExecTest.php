@@ -17,4 +17,30 @@ class ExecTest extends AbstractTestCase
         ));
         $this->assertContains('composer.json', $result);
     }
+
+    public function testOnComplate()
+    {
+        $this->expectOutputString('0');
+        $exec = new Exec();
+        $exec->run(array(
+            'command'  => 'ls',
+            'echo'     => false,
+            'complete' => function ($out, $status) {
+                echo $status;
+            }
+        ));
+    }
+
+    public function testOnError()
+    {
+        $this->expectOutputString('fail');
+        $exec = new Exec();
+        $exec->run(array(
+            'command'  => 'owafwa',
+            'echo'     => false,
+            'error' => function ($out, $status) {
+                echo 'fail';
+            }
+        ));
+    }
 }

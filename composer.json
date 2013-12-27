@@ -1,5 +1,6 @@
 {
   "name": "yaworsw/lackey",
+  "version": "0.1.0",
   "description": "Task runner for PHP",
   "keywords": [
     "automation",

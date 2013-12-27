@@ -13,7 +13,7 @@ $lackey->loadTask(new Task\Exec(), array(
 ));
 
 $lackey->task('say-hello', 'Says hello to the world.  But really just to yourself.', function () {
-    echo 'Hello World!';
+    echo "Hello World!\n\n";
 });
 
 

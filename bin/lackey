@@ -21,6 +21,9 @@ $lackFiles = array(
 
     'Lackyfile.php',
     'lackyfile.php',
+
+    'Lackeyfile.php',
+    'lackeyfile.php',
 );
 
 while (is_dir($path)) {

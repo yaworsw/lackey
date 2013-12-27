@@ -30,7 +30,7 @@ class Exec extends AbstractTask
 
         chdir($oldCwd);
 
-        $out = implode($out, "\n");
+        $out = implode($out, PHP_EOL);
         $cufArray = array($out, $status);
 
         if ($status !== 0) {
@@ -48,6 +48,7 @@ class Exec extends AbstractTask
 
         if ($options['echo']) {
             echo $out;
+            echo PHP_EOL;
         }
 
         return $out;

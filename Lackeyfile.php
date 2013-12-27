@@ -17,6 +17,10 @@ $lackey->task('say-hello', 'Says hello to the world.  But really just to yoursel
 });
 
 
-$lackey->alias('default', 'Builds the application.', array(
+$lackey->alias('default', 'Default command.', array(
     'say-hello', 'exec:phpunit',
+));
+
+$lackey->alias('build', 'Builds the application.', array(
+    'exec:phpunit',
 ));

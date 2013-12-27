@@ -12,7 +12,8 @@ class ExecTest extends AbstractTestCase
     {
         $exec   = new Exec();
         $result = $exec->run(array(
-            'command' => 'ls'
+            'command' => 'ls',
+            'echo'    => false,
         ));
         $this->assertContains('composer.json', $result);
     }

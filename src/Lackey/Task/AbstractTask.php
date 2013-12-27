@@ -10,6 +10,7 @@ abstract class AbstractTask implements Task
 
     public function getName()
     {
-        return str_replace('_', '-', Inflector::tableize(get_called_class()));
+        $class = explode('\\', str_replace('_', '-', Inflector::tableize(get_called_class())));
+        return end($class);
     }
 }

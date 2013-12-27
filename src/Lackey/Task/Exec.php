@@ -10,7 +10,8 @@ class Exec extends AbstractTask
     public function __construct()
     {
         $this->defaults = array(
-            'cwd' => getcwd(),
+            'cwd'  => getcwd(),
+            'echo' => true
         );
     }
 
@@ -43,6 +44,10 @@ class Exec extends AbstractTask
         }
         if (isset($options['complete'])) {
             call_user_func_array($options['complete'], $cufArray);
+        }
+
+        if ($options['echo']) {
+            echo $out;
         }
 
         return $out;

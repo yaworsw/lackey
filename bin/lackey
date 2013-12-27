@@ -40,3 +40,7 @@ $lackey = \Lackey\Lackey::getInstance();
 if ($lackey === null) {
     die('Lackey not initialized');
 }
+
+$task = isset($argv[1]) ? $argv[1] : 'default';
+
+$lackey->run($task);

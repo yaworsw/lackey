@@ -11,3 +11,8 @@ $lackey->loadTask(new Task\Exec(), array(
         'command' => './vendor/bin/phpunit -c tests/phpunit.xml',
     ),
 ));
+
+
+$lackey->alias('default', 'Builds the application.', array(
+    'exec:phpunit',
+));

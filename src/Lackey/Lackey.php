@@ -7,7 +7,7 @@ class Lackey
 
     private static $instance;
 
-    protected $tasks = array();
+    protected $tasks   = array();
 
     protected $options = array();
 
@@ -20,6 +20,16 @@ class Lackey
     public static function getInstance()
     {
         return self::$instance;
+    }
+
+    public function alias($name, $description, array $tasks = array())
+    {
+        if (!isset($tasks) && is_array($description)) {
+            $tasks       = $description;
+            $description = null;
+        }
+        $this->tasks[$name]   = new Task\MultiTask($description);
+        $this->options[$name] = $tasks;
     }
 
     public function loadComposerTask($name, array $options = array())

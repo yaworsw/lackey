@@ -42,9 +42,13 @@ class Lackey
 
     }
 
-    public function run($taskName)
+    public function run($taskName, $subtask = null)
     {
-        $task = $this->tasks[$taskName];
-        $task->run($this->options[$taskName]);
+        if (isset($subtask) || strpos($taskName, ':') !== false) {
+            list($taskName, $subtask) = explode(':', $taskName);
+        }
+        $task    = $this->tasks[$taskName];
+        $options = isset($subtask) ? $this->options[$taskName][$subtask] : $this->options[$taskName];
+        $task->run($options);
     }
 }

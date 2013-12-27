@@ -7,5 +7,7 @@ use Lackey\Task;
 $lackey = new \Lackey\Lackey();
 
 $lackey->loadTask(new Task\Exec(), array(
-    'command' => './vendor/bin/phpunit -c tests/phpunit.xml',
+    'phpunit' => array(
+        'command' => './vendor/bin/phpunit -c tests/phpunit.xml',
+    ),
 ));

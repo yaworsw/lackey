@@ -8,7 +8,8 @@
     "task"
   ],
   "require": {
-    "kevinlebrun/colors.php":    "0.3.0"
+    "php":                        ">=5.3",
+    "kevinlebrun/colors.php":     "0.3.0"
   },
   "require-dev": {
     "phpunit/phpunit":           "3.7.*",

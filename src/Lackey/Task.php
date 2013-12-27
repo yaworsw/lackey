@@ -2,12 +2,7 @@
 
 namespace Lackey;
 
-interface Task
+abstract class Task implements TaskInterface
 {
 
-    public function run(array $options = array());
-
-    public function getName();
-
-    public function getDescription();
 }

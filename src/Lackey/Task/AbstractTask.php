@@ -2,10 +2,9 @@
 
 namespace Lackey\Task;
 
-use Doctrine\Common\Inflector\Inflector;
 use Lackey\Task;
 
-abstract class AbstractTask implements Task
+abstract class AbstractTask extends Task
 {
 
     public function getDescription()

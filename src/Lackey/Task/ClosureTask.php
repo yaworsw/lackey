@@ -2,6 +2,9 @@
 
 namespace Lackey\Task;
 
+/**
+ * A task which wraps a closure.
+ */
 class ClosureTask extends AbstractTask
 {
 

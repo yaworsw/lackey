@@ -2,6 +2,11 @@
 
 namespace Lackey\Task;
 
+use Lackey\Lackey;
+
+/**
+ * A task which wraps around multiple other tasks.
+ */
 class MultiTask extends AbstractTask
 {
 
@@ -14,7 +19,7 @@ class MultiTask extends AbstractTask
 
     public function run(array $options = array())
     {
-        $lackey = \Lackey\Lackey::getInstance();
+        $lackey = Lackey::getInstance();
         foreach ($options as $task) {
             $lackey->run($task);
         }

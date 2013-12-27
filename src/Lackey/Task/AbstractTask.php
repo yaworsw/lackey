@@ -7,6 +7,9 @@ use Lackey\Task;
 abstract class AbstractTask extends Task
 {
 
+    /**
+     * Attempt to get the description from a property.
+     */
     public function getDescription()
     {
         if (isset($this->description)) {
@@ -16,6 +19,10 @@ abstract class AbstractTask extends Task
         }
     }
 
+    /**
+     * Attempt to get the description from a property.  If that fails then use
+     * the class's name.
+     */
     public function getName()
     {
         if (isset($this->name)) {

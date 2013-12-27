@@ -25,6 +25,9 @@ class Lackey
         return self::$instance;
     }
 
+    /**
+     * Create an alias which can refer to multiple other tasks.
+     */
     public function alias($name, $description, array $tasks = array())
     {
         if (!isset($tasks) && is_array($description)) {
@@ -35,6 +38,10 @@ class Lackey
         $this->options[$name] = array($tasks);
     }
 
+    /**
+     * Load a task.  Can be passed either a string which is the class name of
+     * the task or an instance of the task's class.
+     */
     public function loadTask($name, array $options = array())
     {
         if (!($name instanceof Task)) {
@@ -49,12 +56,18 @@ class Lackey
         $this->options[$taskName] = array_replace($this->options[$taskName], $options);
     }
 
+    /**
+     * Create a task which calls an anonymous function.
+     */
     public function task($name, $description, \Closure $closure, array $options = array())
     {
         $task = new ClosureTask($name, $description, $closure);
         $this->loadTask($task, $options);
     }
 
+    /**
+     * Runs a task.
+     */
     public function run($taskName)
     {
         $c = new Color();

@@ -2,6 +2,9 @@
 
 namespace Lackey\Task;
 
+/**
+ * A task which runs a shell command.
+ */
 class Exec extends AbstractTask
 {
 
@@ -9,6 +12,9 @@ class Exec extends AbstractTask
 
     protected $description = 'Runs a command in a shell.';
 
+    /**
+     * Initialize defaults.
+     */
     public function __construct()
     {
         $this->defaults = array(
@@ -17,6 +23,9 @@ class Exec extends AbstractTask
         );
     }
 
+    /**
+     * Runs a given shell command.
+     */
     public function run(array $options = array())
     {
         $options = array_replace_recursive($this->defaults, $options);

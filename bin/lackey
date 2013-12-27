@@ -26,6 +26,7 @@ $lackFiles = array(
 while (is_dir($path)) {
     foreach ($lackFiles as $lackFile) {
         if (is_file($path . '/' . $lackFile)) {
+            chdir(dirname($path . '/' . $lackFile));
             call_user_func(function() use ($path, $lackFile) {
                 include $path . '/' . $lackFile;
             });

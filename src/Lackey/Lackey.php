@@ -69,7 +69,6 @@ class Lackey
             $task->run($options);
         } else {
             foreach ($subtasks as $subtask) {
-                echo $c("Running \"$subtask\" subtask")->underline() . PHP_EOL . PHP_EOL;
                 $options = $this->options[$taskName][$subtask];
                 $task->run($options);
             }

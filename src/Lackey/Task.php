@@ -5,7 +5,9 @@ namespace Lackey;
 interface Task
 {
 
-    public function getDescription();
+    public function run(array $options = array());
 
     public function getName();
+
+    public function getDescription();
 }

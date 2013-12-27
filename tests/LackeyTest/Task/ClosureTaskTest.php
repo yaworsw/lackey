@@ -20,7 +20,7 @@ class ClosureTest extends AbstractTestCase
     {
         $exec = new ClosureTask('closure-task', 'description', function ($options) {
 
-        }, array());
+        });
         $exec->run();
     }
 }

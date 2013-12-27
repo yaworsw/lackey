@@ -7,17 +7,14 @@ class Exec extends AbstractTask
 
     protected $defaults;
 
+    protected $description = 'Runs a command in a shell.';
+
     public function __construct()
     {
         $this->defaults = array(
             'cwd'  => getcwd(),
             'echo' => true
         );
-    }
-
-    public function getDescription()
-    {
-        return 'Runs a command in a shell.';
     }
 
     public function run(array $options = array())

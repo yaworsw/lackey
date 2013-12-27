@@ -18,6 +18,7 @@ class ClosureTask extends AbstractTask
 
     public function run(array $options = array())
     {
+        echo 'asd';
         call_user_func($this->closure, $options);
     }
 }

@@ -12,11 +12,6 @@ class MultiTask extends AbstractTask
         $this->description = $description;
     }
 
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
     public function run(array $options = array())
     {
         $lackey = \Lackey\Lackey::getInstance();

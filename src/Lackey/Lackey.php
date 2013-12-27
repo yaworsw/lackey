@@ -3,6 +3,7 @@
 namespace Lackey;
 
 use Colors\Color;
+use Lackey\Task\ClosureTask;
 
 class Lackey
 {
@@ -51,7 +52,8 @@ class Lackey
 
     public function task($name, $description, \Closure $closure, array $options = array())
     {
-
+        $task = new ClosureTask($name, $description, $closure);
+        $this->loadTask($task, $options);
     }
 
     public function run($taskName)
@@ -62,9 +64,15 @@ class Lackey
         $subtasks = strpos($taskName, ':') === false
                   ? array_keys($this->options[$taskName])
                   : array_slice(explode(':', $taskName), 0);
-        foreach ($subtasks as $subtask) {
-            $options = $this->options[$taskName][$subtask];
+        if (count($subtasks) === 0) {
+            $options = $this->options[$taskName];
             $task->run($options);
+        } else {
+            foreach ($subtasks as $subtask) {
+                echo $c("Running \"$subtask\" subtask")->underline() . PHP_EOL . PHP_EOL;
+                $options = $this->options[$taskName][$subtask];
+                $task->run($options);
+            }
         }
     }
 }

@@ -8,7 +8,6 @@
     "task"
   ],
   "require": {
-    "doctrine/inflector":                   "v1.0",
     "kevinlebrun/colors.php":               "0.3.0"
   },
   "require-dev": {

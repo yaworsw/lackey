@@ -22,8 +22,7 @@ abstract class AbstractTask implements Task
         if (isset($this->name)) {
             return $this->name;
         } else {
-            $class = explode('\\', str_replace('_', '-', Inflector::tableize(get_called_class())));
-            return end($class);
+            return strtolower(preg_replace('~(?<=\\w)([A-Z])~', '-$1', @end(explode('\\', get_called_class()))));
         }
     }
 }

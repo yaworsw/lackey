@@ -1,4 +1,42 @@
 #!/usr/bin/env php
 <?php
 
-require __DIR__ . '/../vendor/autoload.php';
+$path   = getcwd();
+
+$lackey = null;
+
+$lackFiles = array(
+    'Lackfile.php',
+    'Lackfile',
+    'lackfile.php',
+    'lackfile',
+
+    'Lakefile.php',
+    'Lakefile',
+    'lakefile.php',
+    'lakefile',
+
+    'Lacky.php',
+    'lacky.php',
+
+    'Lackyfile.php',
+    'lackyfile.php',
+);
+
+while (is_dir($path)) {
+    foreach ($lackFiles as $lackFile) {
+        if (is_file($path . '/' . $lackFile)) {
+            call_user_func(function() use ($path, $lackFile) {
+                include $path . '/' . $lackFile;
+            });
+            break 2;
+        }
+    }
+    $path .= '/..';
+}
+
+$lackey = \Lackey\Lackey::getInstance();
+
+if ($lackey === null) {
+    die('Lackey not initialized');
+}

@@ -22,4 +22,11 @@ class LackyTest extends AbstractTestCase
         ob_end_clean();
         $this->assertTrue(true);
     }
+
+    public function testLoadComposerTask()
+    {
+        $lackey = new Lackey();
+        $lackey->loadComposerTask('LackeyTest\\ComposerTask', array());
+        $this->assertTrue(true);
+    }
 }

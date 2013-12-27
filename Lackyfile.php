@@ -14,5 +14,5 @@ $lackey->loadTask(new Task\Exec(), array(
 
 
 $lackey->alias('default', 'Builds the application.', array(
-    'exec:phpunit',
+    'exec',
 ));

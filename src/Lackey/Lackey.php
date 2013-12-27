@@ -29,7 +29,7 @@ class Lackey
             $description = null;
         }
         $this->tasks[$name]   = new Task\MultiTask($description);
-        $this->options[$name] = $tasks;
+        $this->options[$name] = array($tasks);
     }
 
     public function loadComposerTask($name, array $options = array())
@@ -52,13 +52,15 @@ class Lackey
 
     }
 
-    public function run($taskName, $subtask = null)
+    public function run($taskName)
     {
-        if (isset($subtask) || strpos($taskName, ':') !== false) {
-            list($taskName, $subtask) = explode(':', $taskName);
+        $task     = $this->tasks[$taskName];
+        $subtasks = strpos($taskName, ':') === false
+                  ? array_keys($this->options[$taskName])
+                  : array_slice(explode(':', $taskName), 0);
+        foreach ($subtasks as $subtask) {
+            $options = $this->options[$taskName][$subtask];
+            $task->run($options);
         }
-        $task    = $this->tasks[$taskName];
-        $options = isset($subtask) ? $this->options[$taskName][$subtask] : $this->options[$taskName];
-        $task->run($options);
     }
 }

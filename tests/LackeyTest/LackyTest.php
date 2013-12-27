@@ -26,7 +26,7 @@ class LackyTest extends AbstractTestCase
     public function testLoadComposerTask()
     {
         $lackey = new Lackey();
-        $lackey->loadComposerTask('LackeyTest\\ComposerTask', array());
+        $lackey->loadTask('LackeyTest\\ComposerTask', array());
         $this->assertTrue(true);
     }
 }

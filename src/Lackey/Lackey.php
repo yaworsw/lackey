@@ -35,16 +35,12 @@ class Lackey
         $this->options[$name] = array($tasks);
     }
 
-    public function loadComposerTask($name, array $options = array())
+    public function loadTask($name, array $options = array())
     {
         if (!($name instanceof Task)) {
             $name = new $name;
         }
-        $this->loadTask($name, $options);
-    }
-
-    public function loadTask(Task $task, array $options = array())
-    {
+        $task = $name;
         $taskName = $task->getName();
         $this->tasks[$taskName] = $task;
         if (!isset($options[$taskName])) {

@@ -17,6 +17,9 @@ class LackyTest extends AbstractTestCase
                 'echo'    => false
             ),
         ));
+        ob_start();
         $lackey->run('exec:ls');
+        ob_end_clean();
+        $this->assertTrue(true);
     }
 }

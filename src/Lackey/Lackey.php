@@ -60,6 +60,9 @@ class Lackey
     {
         $c = new Color();
         echo $c("Running \"$taskName\" task")->underline() . PHP_EOL . PHP_EOL;
+        if (strpos($taskName, ':') !== false) {
+            $taskName = explode(':', $taskName)[0];
+        }
         $task     = $this->tasks[$taskName];
         $subtasks = strpos($taskName, ':') === false
                   ? array_keys($this->options[$taskName])

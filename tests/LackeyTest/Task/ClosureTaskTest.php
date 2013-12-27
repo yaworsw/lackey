@@ -19,8 +19,9 @@ class ClosureTest extends AbstractTestCase
     public function testRun()
     {
         $exec = new ClosureTask('closure-task', 'description', function ($options) {
-
+            echo 'foo';
         });
-        $exec->run();
+        $this->expectOutputString('foo');
+        $exec->run(array());
     }
 }

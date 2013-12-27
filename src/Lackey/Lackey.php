@@ -37,7 +37,7 @@ class Lackey
 
     public function loadComposerTask($name, array $options = array())
     {
-
+        $this->loadTask(new $name(), $options);
     }
 
     public function loadTask(Task $task, array $options = array())

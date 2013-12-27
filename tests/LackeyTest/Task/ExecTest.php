@@ -25,7 +25,7 @@ class ExecTest extends AbstractTestCase
         $exec->run(array(
             'command'  => 'ls',
             'echo'     => false,
-            'complete' => function ($out, $status) {
+            'complete' => function ($out, $err, $status) {
                 echo $status;
             }
         ));
@@ -38,7 +38,7 @@ class ExecTest extends AbstractTestCase
         $exec->run(array(
             'command'  => 'owafwa',
             'echo'     => false,
-            'error' => function ($out, $status) {
+            'error' => function ($out, $err, $status) {
                 echo 'fail';
             }
         ));

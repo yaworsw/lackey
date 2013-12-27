@@ -41,42 +41,33 @@ class Exec extends AbstractTask
             $options['cwd'],
             null
         );
-        if (is_resource($proc)) {
-            $stdout = stream_get_contents($pipes[1]);
-            $stderr = stream_get_contents($pipes[2]);
 
-            foreach ($pipes as $pipe) {
-                fclose($pipe);
-            }
-
-            $status = proc_close($proc);
-
-            $cufArray = array($stdout, $stderr, $status);
-
-            if ($status !== 0) {
-                if (isset($options['error'])) {
-                    call_user_func_array($options['error'], $cufArray);
-                }
-            } else {
-                if (isset($options['success'])) {
-                    call_user_func_array($options['success'], $cufArray);
-                }
-            }
-            if (isset($options['complete'])) {
-                call_user_func_array($options['complete'], $cufArray);
-            }
-
-            if ($options['echo']) {
-                echo $stdout;
-                echo PHP_EOL;
-            }
-
-            return $stdout;
-
-        } else {
-
+        if (!is_resource($proc)) {
             throw new \Exception('Unable to start process');
-
         }
+
+        $stdout = stream_get_contents($pipes[1]);
+        $stderr = stream_get_contents($pipes[2]);
+
+        foreach ($pipes as $pipe) {
+            fclose($pipe);
+        }
+
+        $status   = proc_close($proc);
+
+        $result = $status !== 0 ? 'error' : 'success';
+        if (isset($options[$result])) {
+            call_user_func($options[$result], $stdout, $stderr, $status);
+        }
+
+        if (isset($options['complete'])) {
+            call_user_func($options['complete'], $stdout, $stderr, $status);
+        }
+
+        if ($options['echo']) {
+            echo $stdout . PHP_EOL;
+        }
+
+        return $stdout;
     }
 }

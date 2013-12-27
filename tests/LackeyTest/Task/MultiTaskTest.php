@@ -11,6 +11,7 @@ class MultiTaskTest extends AbstractTestCase
     public function testRun()
     {
         $lackey = $this->getMock('\Lackey\Lackey');
+
         $lackey->expects($this->at(0))
                ->method('run')
                ->with('one');

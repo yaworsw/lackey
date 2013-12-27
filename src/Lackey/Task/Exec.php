@@ -49,11 +49,9 @@ class Exec extends AbstractTask
         $stdout = stream_get_contents($pipes[1]);
         $stderr = stream_get_contents($pipes[2]);
 
-        foreach ($pipes as $pipe) {
-            fclose($pipe);
-        }
+        array_walk($pipes, array($this, 'closePipe'));
 
-        $status   = proc_close($proc);
+        $status = proc_close($proc);
 
         $result = $status !== 0 ? 'error' : 'success';
         if (isset($options[$result])) {
@@ -69,5 +67,13 @@ class Exec extends AbstractTask
         }
 
         return $stdout;
+    }
+
+    /**
+     * Helper function used to close pipes.
+     */
+    private static function closePipe($pipe)
+    {
+        fclose($pipe);
     }
 }

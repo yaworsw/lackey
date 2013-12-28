@@ -8,15 +8,21 @@ use Lackey\Task\ClosureTask;
 class Lackey
 {
 
+    protected static $runDefaults = array(
+        'quiet' => false,
+    );
+
     private static $instance;
 
     protected $tasks   = array();
 
     protected $options = array();
 
-    public function __construct()
-    {
+    protected $runOptions;
 
+    public function __construct(array $runDefaults = array())
+    {
+        $this->runOptions = array_replace_recursive(self::$runDefaults, $runDefaults);
         self::$instance = $this;
     }
 
@@ -70,9 +76,10 @@ class Lackey
      */
     public function run($taskName, array $options = array())
     {
-        $quiet = isset($options['quiet']) ? $options['quiet'] : false;
+        $options = array_replace_recursive($this->runOptions, $options);
+
         $c = new Color();
-        if (!$quiet) {
+        if (!$options['quiet']) {
             echo $c("Running \"$taskName\" task")->underline() . PHP_EOL . PHP_EOL;
         }
         if (strpos($taskName, ':') !== false) {

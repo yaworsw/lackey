@@ -33,18 +33,18 @@ class LackyTest extends AbstractTestCase
     public function testDefineClosureTask()
     {
         $var    = false;
-        $lackey = new Lackey();
+        $lackey = new Lackey(array('quiet' => true));
         $lackey->task('hello', function () use (&$var) {
             $var = true;
         });
-        $lackey->run('hello', array('quiet' => true));
+        $lackey->run('hello');
         $this->assertTrue($var);
     }
 
     public function testTaskNotDefined()
     {
         $this->setExpectedException('Lackey\\TaskNotFoundException');
-        $lackey = new Lackey();
-        $lackey->run('hello', array('quiet' => true));
+        $lackey = new Lackey(array('quiet' => true));
+        $lackey->run('hello');
     }
 }

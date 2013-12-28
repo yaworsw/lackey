@@ -68,10 +68,13 @@ class Lackey
     /**
      * Runs a task.
      */
-    public function run($taskName)
+    public function run($taskName, array $options = array())
     {
+        $quiet = isset($options['quiet']) ? $options['quiet'] : false;
         $c = new Color();
-        echo $c("Running \"$taskName\" task")->underline() . PHP_EOL . PHP_EOL;
+        if (!$quiet) {
+            echo $c("Running \"$taskName\" task")->underline() . PHP_EOL . PHP_EOL;
+        }
         if (strpos($taskName, ':') !== false) {
             $temp     = explode(':', $taskName);
             $taskName = $temp[0];

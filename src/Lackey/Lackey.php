@@ -76,6 +76,9 @@ class Lackey
             $temp     = explode(':', $taskName);
             $taskName = $temp[0];
         }
+        if (!isset($this->tasks[$taskName])) {
+            throw new TaskNotFoundException("Task \"$taskName\" was not found");
+        }
         $task     = $this->tasks[$taskName];
         $subtasks = strpos($taskName, ':') === false
                   ? array_keys($this->options[$taskName])

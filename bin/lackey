@@ -47,4 +47,11 @@ if ($lackey === null) {
 
 $task = isset($argv[1]) ? $argv[1] : 'default';
 
-$lackey->run($task);
+$c   = new \Colors\Color();
+
+try {
+    $lackey->run($task);
+} catch (\Lackey\TaskNotFoundException $e) {
+    echo $c('Error: ' . $e->getMessage())->red();
+    echo PHP_EOL . PHP_EOL;
+}

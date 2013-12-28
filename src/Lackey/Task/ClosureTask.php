@@ -12,8 +12,18 @@ class ClosureTask extends AbstractTask
     protected $description;
     protected $closure;
 
-    public function __construct($name, $description, \Closure $closure)
+    public function __construct($name, $description, \Closure $closure = null)
     {
+        if (is_null($closure)) {
+            if (is_callable($description)) {
+                $closure     = $description;
+                $description = '';
+            } else {
+                throw new \InvalidArgumentException(
+                    'No closure passed to ClosureTask constructor'
+                );
+            }
+        }
         $this->name        = $name;
         $this->description = $description;
         $this->closure     = $closure;

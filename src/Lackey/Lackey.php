@@ -59,7 +59,7 @@ class Lackey
     /**
      * Create a task which calls an anonymous function.
      */
-    public function task($name, $description, \Closure $closure, array $options = array())
+    public function task($name, $description, \Closure $closure = null, array $options = array())
     {
         $task = new ClosureTask($name, $description, $closure);
         $this->loadTask($task, $options);

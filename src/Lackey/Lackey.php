@@ -3,13 +3,15 @@
 namespace Lackey;
 
 use Colors\Color;
-use Lackey\Task\ClosureTask;
+use Lackey\Task;
 
 class Lackey
 {
 
     protected static $runDefaults = array(
-        'quiet' => false,
+        'silent'    => false,   // do not output anything, (squelch + quiet)
+        'squelch'   => false,   // do not echo any output
+        'quiet'     => false,   // do not echo 'Running X task'
     );
 
     private static $instance;
@@ -67,32 +69,41 @@ class Lackey
      */
     public function task($name, $description, \Closure $closure = null, array $options = array())
     {
-        $task = new ClosureTask($name, $description, $closure);
+        $task = new Task\ClosureTask($name, $description, $closure);
         $this->loadTask($task, $options);
     }
 
     /**
      * Runs a task.
      */
-    public function run($taskName, array $options = array())
+    public function run($taskName, array $runOptions = array())
     {
-        $options = array_replace_recursive($this->runOptions, $options);
+        $runOptions = array_replace_recursive($this->runOptions, $runOptions);
 
         $c = new Color();
-        if (!$options['quiet']) {
+
+        if (!$runOptions['silent'] && !$runOptions['quiet']) {
             echo $c("Running \"$taskName\" task")->underline() . PHP_EOL . PHP_EOL;
         }
+
         if (strpos($taskName, ':') !== false) {
             $temp     = explode(':', $taskName);
             $taskName = $temp[0];
         }
+
         if (!isset($this->tasks[$taskName])) {
             throw new TaskNotFoundException("Task \"$taskName\" was not found");
         }
+
         $task     = $this->tasks[$taskName];
         $subtasks = strpos($taskName, ':') === false
                   ? array_keys($this->options[$taskName])
                   : array_slice(explode(':', $taskName), 0);
+
+        if ($runOptions['silent'] || $runOptions['squelch']) {
+            ob_start();
+        }
+
         if (count($subtasks) === 0) {
             $options = $this->options[$taskName];
             $task->run($options);
@@ -102,5 +113,10 @@ class Lackey
                 $task->run($options);
             }
         }
+
+        if ($runOptions['silent'] || $runOptions['squelch']) {
+            ob_end_clean();
+        }
+
     }
 }

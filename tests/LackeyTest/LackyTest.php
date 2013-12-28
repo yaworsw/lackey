@@ -10,16 +10,14 @@ class LackyTest extends AbstractTestCase
 
     public function testSubTask()
     {
-        $lackey = new Lackey();
+        $lackey = new Lackey(array('silent' => true));
         $lackey->loadTask(new Task\Exec(), array(
             'ls' => array(
                 'command' => 'ls',
                 'echo'    => false
             ),
         ));
-        ob_start();
         $lackey->run('exec:ls');
-        ob_end_clean();
         $this->assertTrue(true);
     }
 

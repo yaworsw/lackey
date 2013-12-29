@@ -33,6 +33,31 @@ class Lackey
         return self::$instance;
     }
 
+    private static function notNumeric($in)
+    {
+        return !is_numeric($in);
+    }
+
+    public function getDescriptions()
+    {
+        $descriptions = array();
+        foreach ($this->tasks as $name => $task) {
+            $descriptions[$name] = array(
+                'subtasks'    => $this->getSubTasks($name),
+                'description' => $task->getDescription(),
+            );
+        }
+        ksort($descriptions);
+        return $descriptions;
+    }
+
+    public function getSubTasks($task)
+    {
+        $subtasks = array_filter(array_keys($this->options[$task]), array($this, 'notNumeric'));
+        sort($subtasks);
+        return $subtasks;
+    }
+
     /**
      * Create an alias which can refer to multiple other tasks.
      */

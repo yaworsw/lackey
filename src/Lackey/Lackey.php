@@ -51,9 +51,13 @@ class Lackey
         return $descriptions;
     }
 
-    public function getSubTasks($task)
+    public function getSubTasks($task, $filter = true)
     {
-        $subtasks = array_filter(array_keys($this->options[$task]), array($this, 'notNumeric'));
+        $subtasks = array_keys($this->options[$task]);
+        if ($filter) {
+            $filterFunction = $filter === true ? array($this, 'notNumeric') : $filter;
+            $subtasks       = array_filter($subtasks, $filterFunction);
+        }
         sort($subtasks);
         return $subtasks;
     }
@@ -121,9 +125,7 @@ class Lackey
         }
 
         $task     = $this->tasks[$taskName];
-        $subtasks = strpos($taskName, ':') === false
-                  ? array_keys($this->options[$taskName])
-                  : array_slice(explode(':', $taskName), 0);
+        $subtasks = $this->getSubTasks($taskName, false);
 
         if ($runOptions['silent'] || $runOptions['squelch']) {
             ob_start();

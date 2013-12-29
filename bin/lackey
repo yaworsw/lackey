@@ -16,21 +16,27 @@ while (is_dir($path)) {
             call_user_func(function() use ($path, $lackFile) {
                 include $path . '/' . $lackFile;
             });
-            break 2;
+            goto dirFound;
         }
     }
-    $path .= '/..';
+    $path = dirname($path);
+}
+throw new Exception('Lackeyfile not found');
+dirFound:
+
+if (!class_exists('\Lackey\Lackey')) {
+    throw new Exception('Autoloader not included in lackeyfile');
 }
 
 $lackey = \Lackey\Lackey::getInstance();
 
 if ($lackey === null) {
-    die('Lackey not initialized');
+    throw new Exception('Lackey was not initialized in lackeyfile');
 }
 
 $task = isset($argv[1]) ? $argv[1] : 'default';
 
-$c   = new \Colors\Color();
+$c    = new \Colors\Color();
 
 try {
     $lackey->run($task);

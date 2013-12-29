@@ -71,7 +71,7 @@ class Lackey
             $tasks       = $description;
             $description = null;
         }
-        $this->tasks[$name]   = new Task\MultiTask($description);
+        $this->tasks[$name]   = new Task\Multi($description);
         $this->options[$name] = array($tasks);
     }
 
@@ -84,7 +84,7 @@ class Lackey
         if (!($name instanceof Task)) {
             $name = new $name;
         }
-        $task = $name;
+        $task     = $name;
         $taskName = $task->getName();
         $this->tasks[$taskName] = $task;
         if (!isset($options[$taskName])) {
@@ -98,7 +98,7 @@ class Lackey
      */
     public function task($name, $description, \Closure $closure = null, array $options = array())
     {
-        $task = new Task\ClosureTask($name, $description, $closure);
+        $task = new Task\Closure($name, $description, $closure);
         $this->loadTask($task, $options);
     }
 

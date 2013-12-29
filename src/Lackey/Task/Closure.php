@@ -5,7 +5,7 @@ namespace Lackey\Task;
 /**
  * A task which wraps a closure.
  */
-class ClosureTask extends AbstractTask
+class Closure extends AbstractTask
 {
 
     protected $name;

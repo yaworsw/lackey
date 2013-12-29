@@ -5,7 +5,7 @@ namespace Lackey\Task;
 /**
  * A task which runs a shell command.
  */
-class Exec extends AbstractTask
+class Exec extends AbstractMultiTask
 {
 
     protected $defaults;

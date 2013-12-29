@@ -2,7 +2,7 @@
 
 namespace LackeyTest\Task;
 
-use Lackey\Task\MultiTask;
+use Lackey\Task\Multi;
 use LackeyTest\AbstractTestCase;
 
 class MultiTaskTest extends AbstractTestCase
@@ -24,7 +24,7 @@ class MultiTaskTest extends AbstractTestCase
                ->method('run')
                ->with('three');
 
-        $task = new MultiTask();
+        $task = new Multi();
         $task->run(array(
           'one', 'two', 'three'
         ));

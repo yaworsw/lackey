@@ -2,7 +2,7 @@
 
 namespace LackeyTest\Task;
 
-use Lackey\Task\ClosureTask;
+use Lackey\Task\Closure;
 use LackeyTest\AbstractTestCase;
 
 class ClosureTest extends AbstractTestCase
@@ -10,7 +10,7 @@ class ClosureTest extends AbstractTestCase
 
     public function testName()
     {
-        $exec = new ClosureTask('closure-task', 'description', function ($options) {
+        $exec = new Closure('closure-task', 'description', function ($options) {
 
         });
         $this->assertEquals('closure-task', $exec->getName());
@@ -18,7 +18,7 @@ class ClosureTest extends AbstractTestCase
 
     public function testRun()
     {
-        $exec = new ClosureTask('closure-task', 'description', function ($options) {
+        $exec = new Closure('closure-task', 'description', function ($options) {
             echo 'foo';
         });
         $this->expectOutputString('foo');

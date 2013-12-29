@@ -7,7 +7,7 @@ use Lackey\Lackey;
 /**
  * A task which wraps around multiple other tasks.
  */
-class MultiTask extends AbstractTask
+class Multi extends AbstractTask
 {
 
     protected $description;

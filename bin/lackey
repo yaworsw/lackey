@@ -6,24 +6,7 @@ $path   = getcwd();
 $lackey = null;
 
 $lackFiles = array(
-    'Lackfile.php',
-    'Lackfile',
-    'lackfile.php',
-    'lackfile',
-
-    'Lakefile.php',
-    'Lakefile',
-    'lakefile.php',
-    'lakefile',
-
-    'Lacky.php',
-    'lacky.php',
-
-    'Lackyfile.php',
-    'lackyfile.php',
-
     'Lackeyfile.php',
-    'lackeyfile.php',
 );
 
 while (is_dir($path)) {

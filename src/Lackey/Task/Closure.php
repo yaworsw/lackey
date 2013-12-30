@@ -2,6 +2,8 @@
 
 namespace Lackey\Task;
 
+use Lackey\Task\Closure\Result;
+
 /**
  * A task which wraps a closure.
  */
@@ -31,6 +33,14 @@ class Closure extends AbstractTask
 
     public function run(array $taskOptions = array(), array $runOptions = array())
     {
-        call_user_func($this->closure, $taskOptions, $runOptions);
+        try {
+            $result = call_user_func($this->closure, $taskOptions, $runOptions);
+            if (is_null($result)) {
+                $result = 0;
+            }
+            return new Result($result);
+        } catch (\Exception $ex) {
+            return new Result(1, $ex->getMessage());
+        }
     }
 }

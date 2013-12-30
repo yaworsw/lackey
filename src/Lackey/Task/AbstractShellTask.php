@@ -3,7 +3,7 @@
 namespace Lackey\Task;
 
 use Lackey\TaskInterface;
-use Lackey\Task\ShellTask\Command;
+use Lackey\Task\Shell\Command;
 
 abstract class AbstractShellTask extends AbstractTask
 {

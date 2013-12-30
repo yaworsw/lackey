@@ -3,6 +3,7 @@
 namespace Lackey\Task;
 
 use Lackey\Lackey;
+use Lackey\Task\Multi\Result;
 
 /**
  * A task which wraps around multiple other tasks.
@@ -19,9 +20,11 @@ class Multi extends AbstractTask
 
     public function run(array $taskOptions = array(), array $runOptions = array())
     {
-        $lackey = Lackey::getInstance();
+        $lackey  = Lackey::getInstance();
+        $results = array();
         foreach ($taskOptions as $task) {
-            $lackey->run($task, $runOptions);
+            $results[] = $lackey->run($task, $runOptions);
         }
+        return new Result($results);
     }
 }

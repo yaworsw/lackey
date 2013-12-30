@@ -1,6 +1,6 @@
 <?php
 
-namespace Lackey\Task\ShellTask;
+namespace Lackey\Task\Shell;
 
 class Command
 {

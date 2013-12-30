@@ -10,11 +10,12 @@ class ExecTest extends AbstractTestCase
 
     public function testRun()
     {
-        $exec   = new Exec();
-        $result = $exec->run(array(
-            'command' => 'ls',
-            'echo'    => false,
-        ));
+        $result = $this->captureOut(function () {
+            $exec   = new Exec();
+            $exec->run(array(
+                'command' => 'ls',
+            ));
+        });
         $this->assertContains('composer.json', $result);
     }
 

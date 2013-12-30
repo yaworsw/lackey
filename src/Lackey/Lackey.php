@@ -8,12 +8,6 @@ use Lackey\Task;
 class Lackey
 {
 
-    protected static $runDefaults = array(
-        'silent'    => false,   // do not output anything, (squelch + quiet)
-        'squelch'   => false,   // do not echo any output
-        'quiet'     => false,   // do not echo 'Running X task'
-    );
-
     private static $instance;
 
     protected $tasks   = array();
@@ -22,10 +16,10 @@ class Lackey
 
     protected $runOptions;
 
-    public function __construct(array $runDefaults = array())
+    public function __construct(array $runOptions = array())
     {
-        $this->runOptions = array_replace_recursive(self::$runDefaults, $runDefaults);
-        self::$instance = $this;
+        $this->runOptions = $runOptions;
+        self::$instance   = $this;
     }
 
     public static function getInstance()
@@ -117,7 +111,8 @@ class Lackey
     {
         $def = self::taskDefenition($taskName);
         if (!isset($this->tasks[$def['task']])) {
-            throw new TaskNotFoundException("The task \"$taskName\" was not found");
+            $task = $def['task'];
+            throw new TaskNotFoundException("The task \"$task\" was not found");
         }
         return $this->tasks[$def['task']];
     }
@@ -127,11 +122,9 @@ class Lackey
         $def     = self::taskDefenition($taskName);
         $options = $this->options[$def['task']];
         if (isset($def['sub'])) {
-            if (!isset($options[$def['sub']])) {
-                $taskName = implode(':', $def);
-                throw new TaskNotFoundException("Task configuration for the task \"$taskName\" was not found");
-            }
-            $options = $options[$def['sub']];
+            $temp = array();
+            $temp[$def['sub']] = $options[$def['sub']];
+            $options = $temp;
         } else if (isset($options[0])) {
             $options = $options[0];
         }
@@ -140,40 +133,14 @@ class Lackey
 
     public function run($taskName, array $runOptions = array())
     {
-        $c = new Color();
+        $runnerOptions = array_replace_recursive($this->runOptions, $runOptions);
 
-        $runOptions = array_replace_recursive($this->runOptions, $runOptions);
-
-        if (!$runOptions['silent'] && !$runOptions['quiet']) {
-            echo $c("Running ($taskName) task")->underline() . PHP_EOL . PHP_EOL;
-        }
+        $taskRunner = new TaskRunner($runnerOptions);
 
         $def     = self::taskDefenition($taskName);
-        $task    = $this->getTask($taskName);
-        $options = $this->getTaskOptions($taskName);
+        $task    = $this->getTask($def);
+        $options = $this->getTaskOptions($def);
 
-        if ($runOptions['silent'] || $runOptions['squelch']) {
-            ob_start();
-        }
-
-        if ($task instanceof MultiTaskInterface && !isset($def['sub'])) {
-            $this->execMultiTask($task, $options, $runOptions);
-        } else {
-            $task->run($options, $runOptions);
-        }
-
-        if ($runOptions['silent'] || $runOptions['squelch']) {
-            ob_end_clean();
-        }
-    }
-
-    protected function execMultiTask(MultiTaskInterface $task, array $options = array(), array $runOptions = array())
-    {
-        $taskName = $task->getName();
-        $subtasks = array_keys($this->options[$taskName]);
-        sort($subtasks);
-        foreach ($subtasks as $subTask) {
-            $task->run($options[$subTask], $runOptions);
-        }
+        $taskRunner->run($task, $options);
     }
 }

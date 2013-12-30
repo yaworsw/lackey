@@ -133,16 +133,30 @@ class Lackey
 
     public function run($taskName, array $runOptions = array())
     {
+        $c = new Color();
+
         $runOptions = array_replace_recursive($this->runOptions, $runOptions);
+
+        if (!$runOptions['silent'] && !$runOptions['quiet']) {
+            echo $c("Running ($taskName) task")->underline() . PHP_EOL . PHP_EOL;
+        }
 
         $def     = self::taskDefenition($taskName);
         $task    = $this->getTask($taskName);
         $options = $this->getTaskOptions($taskName);
 
+        if ($runOptions['silent'] || $runOptions['squelch']) {
+            ob_start();
+        }
+
         if ($task instanceof MultiTaskInterface && !isset($def['sub'])) {
             $this->execMultiTask($task, $options, $runOptions);
         } else {
             $task->run($options, $runOptions);
+        }
+
+        if ($runOptions['silent'] || $runOptions['squelch']) {
+            ob_end_clean();
         }
     }
 

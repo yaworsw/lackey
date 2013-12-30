@@ -26,6 +26,11 @@ class Lackey
         return self::$instance;
     }
 
+    public function setDefault(array $tasks = array())
+    {
+        $this->alias('default', 'The default task', $tasks);
+    }
+
     /**
      * Create an alias which can refer to multiple other tasks.
      */
@@ -141,5 +146,12 @@ class Lackey
         $options = $this->getTaskOptions($def);
 
         $taskRunner->run($task, $options);
+    }
+
+    public function __call($name, $args)
+    {
+        if ($name === 'default') {
+            return call_user_func_array(array($this, 'setDefault'), $args);
+        }
     }
 }

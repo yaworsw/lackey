@@ -22,7 +22,8 @@ class TaskRunner
 
     public function run(TaskInterface $task, array $options = array())
     {
-        $this->{'run' . ($task instanceof MultiTaskInterface ? 'Multi' : 'Single') . 'Task'}($task, $options);
+        $type = $task instanceof MultiTaskInterface ? 'Multi' : 'Single';
+        return $this->{'run' . $type . 'Task'}($task, $options);
     }
 
     protected function announceRunningTask($task, $options, $taskName = null)
@@ -54,14 +55,21 @@ class TaskRunner
     {
         $this->announceRunningTask($task, $options, $taskName);
         $this->silence();
-        $task->run($options, $this->options);
+        $result = $task->run($options, $this->options);
         $this->unsilence();
+        return $result;
     }
 
     protected function runMultiTask(MultiTaskInterface $task, $options)
     {
+        $results = new Task\Multi\Result();
         foreach ($options as $subTask => $taskOptions) {
-            $this->runSingleTask($task, $taskOptions, $task->getName() . ':' . $subTask);
+            $result = $this->runSingleTask($task, $taskOptions, $task->getName() . ':' . $subTask);
+            $results->add($result);
+            if ($results->getStatus() !== 0) {
+                break;
+            }
         }
+        return $results;
     }
 }

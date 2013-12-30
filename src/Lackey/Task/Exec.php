@@ -21,6 +21,6 @@ class Exec extends AbstractShellTask implements MultiTaskInterface
         $options = array_replace_recursive($this->defaults, $options);
         $options['bin'] = $options['command'];
         $result = parent::exec($options);
-        return $result->status;
+        return $result;
     }
 }

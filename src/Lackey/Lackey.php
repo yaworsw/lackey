@@ -34,7 +34,7 @@ class Lackey
     /**
      * Create an alias which can refer to multiple other tasks.
      */
-    public function alias($name, $description, array $tasks = array())
+    public function alias($name, $description, array $tasks = null)
     {
         if (!isset($tasks) && is_array($description)) {
             $tasks       = $description;

@@ -15,9 +15,9 @@ class Result extends Task\AbstractResult
     {
         if (!is_null($r)) {
             $this->results[] = $r;
-            if ($this->status === 0) {
+            if ($this->status == 0) {
                 $status = $r->getStatus();
-                if ($status !== 0) {
+                if ($status != 0) {
                     $this->status = $status;
                 }
             }

@@ -24,6 +24,9 @@ class Multi extends AbstractTask
         foreach ($taskOptions as $task) {
             $result = $lackey->run($task, $runOptions);
             $results->add($result);
+            if ($results->getStatus() !== 0) {
+                break;
+            }
         }
         return $results;
     }

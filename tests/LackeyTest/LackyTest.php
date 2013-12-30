@@ -8,6 +8,24 @@ use Lackey\Task;
 class LackyTest extends AbstractTestCase
 {
 
+    public function testExecutionStopsAfterFailedTask()
+    {
+        $lackey = new Lackey(array('quiet' => true));
+        $lackey->task('one', 'first', function () {
+            echo '1';
+        });
+        $lackey->task('two', function () {
+            echo '2';
+            return 32432;
+        });
+        $lackey->task('three', function () {
+            echo '3';
+        });
+        $lackey->alias('test', array('one', 'two', 'three'));
+        $this->expectOutputString('12');
+        $lackey->run('test');
+    }
+
     public function testMultipleSubTasks()
     {
         $lackey = new Lackey(array('quiet' => true));

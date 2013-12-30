@@ -2,10 +2,10 @@
 
 namespace LackeyTest\Task;
 
-use Lackey\Task\Multi;
+use Lackey\Task\Alias;
 use LackeyTest\AbstractTestCase;
 
-class MultiTest extends AbstractTestCase
+class AliasTest extends AbstractTestCase
 {
 
     public function testRun()
@@ -24,7 +24,7 @@ class MultiTest extends AbstractTestCase
                ->method('run')
                ->with('three');
 
-        $task = new Multi();
+        $task = new Alias();
         $task->run(array(
           'one', 'two', 'three'
         ));

@@ -40,7 +40,7 @@ class Lackey
             $tasks       = $description;
             $description = null;
         }
-        $this->tasks[$name]   = new Task\Multi($description);
+        $this->tasks[$name]   = new Task\Alias($description);
         $this->options[$name] = array($tasks);
     }
 
@@ -148,7 +148,7 @@ class Lackey
         $result  = $taskRunner->run($task, $options);
 
         return is_null($result)
-             ? new Task\PositiveResult
+             ? new Task\PositiveResult()
              : $result;
     }
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Lackey\Task\Multi;
+namespace Lackey\Task\Alias;
 
 use Lackey\Task;
 

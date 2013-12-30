@@ -62,7 +62,7 @@ class TaskRunner
 
     protected function runMultiTask(MultiTaskInterface $task, $options)
     {
-        $results = new Task\Multi\Result();
+        $results = new Task\Alias\Result();
         foreach ($options as $subTask => $taskOptions) {
             $result = $this->runSingleTask($task, $taskOptions, $task->getName() . ':' . $subTask);
             $results->add($result);

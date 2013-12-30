@@ -7,7 +7,7 @@ use Lackey\Lackey;
 /**
  * A task which wraps around multiple other tasks.
  */
-class Multi extends AbstractTask
+class Alias extends AbstractTask
 {
 
     protected $description;
@@ -20,7 +20,7 @@ class Multi extends AbstractTask
     public function run(array $taskOptions = array(), array $runOptions = array())
     {
         $lackey  = Lackey::getInstance();
-        $results = new Multi\Result();
+        $results = new Alias\Result();
         foreach ($taskOptions as $task) {
             $result = $lackey->run($task, $runOptions);
             $results->add($result);

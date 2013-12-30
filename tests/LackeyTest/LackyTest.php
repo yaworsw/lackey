@@ -16,14 +16,16 @@ class LackyTest extends AbstractTestCase
         });
         $lackey->task('two', function () {
             echo '2';
-            return 32432;
+            return 1; // non zero exit status
         });
         $lackey->task('three', function () {
             echo '3';
         });
         $lackey->alias('test', array('one', 'two', 'three'));
-        $this->expectOutputString('12');
-        $lackey->run('test');
+        $out = $this->captureOut(function () use ($lackey) {
+            $lackey->run('test');
+        });
+        $this->assertContains('12', $out);
     }
 
     public function testMultipleSubTasks()

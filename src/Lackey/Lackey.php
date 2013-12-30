@@ -50,7 +50,7 @@ class Lackey
      */
     public function loadTask($name, array $options = array())
     {
-        if (!($name instanceof Task)) {
+        if (is_string($name)) {
             $name = new $name;
         }
         $task     = $name;

@@ -5,7 +5,7 @@ namespace LackeyTest\Task;
 use Lackey\Task\Multi;
 use LackeyTest\AbstractTestCase;
 
-class MultiTaskTest extends AbstractTestCase
+class MultiTest extends AbstractTestCase
 {
 
     public function testRun()

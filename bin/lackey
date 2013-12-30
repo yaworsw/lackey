@@ -7,7 +7,9 @@ $lackFiles = array(
     'Lackeyfile.php',
 );
 
-while (is_dir($path)) {
+$abort = false;
+
+while (is_dir($path) && !$abort) {
     foreach ($lackFiles as $lackFile) {
         if (is_file($path . '/' . $lackFile)) {
             chdir(dirname($path . '/' . $lackFile));
@@ -17,7 +19,11 @@ while (is_dir($path)) {
             goto dirFound;
         }
     }
-    $path = dirname($path);
+    $oldPath = $path;
+    $path    = realpath($path . '/..');
+    if ($oldPath === $path) {
+        $abort = true;
+    }
 }
 throw new Exception('Lackeyfile not found');
 dirFound:

@@ -2,7 +2,6 @@
 
 namespace Lackey;
 
-use Colors\Color;
 use Lackey\Task;
 
 class Lackey

@@ -91,6 +91,13 @@ class Lackey
         return $descriptions;
     }
 
+    public function getSubTasks($task)
+    {
+        $subtasks = array_filter(array_keys($this->options[$task]), array($this, 'notNumeric'));
+        sort($subtasks);
+        return $subtasks;
+    }
+
     protected static function taskDefenition($taskName)
     {
         if (is_array($taskName)) {
@@ -160,7 +167,7 @@ class Lackey
         }
     }
 
-    public function execMultiTask(MultiTaskInterface $task, array $options = array(), array $runOptions = array())
+    protected function execMultiTask(MultiTaskInterface $task, array $options = array(), array $runOptions = array())
     {
         $taskName = $task->getName();
         $subtasks = array_keys($this->options[$taskName]);

@@ -1,11 +1,7 @@
 #!/usr/bin/env php
 <?php
 
-$opts   = getopt('T');
-
 $path   = getcwd();
-
-$lackey = null;
 
 $lackFiles = array(
     'Lackeyfile.php',
@@ -26,40 +22,10 @@ while (is_dir($path)) {
 throw new Exception('Lackeyfile not found');
 dirFound:
 
-if (!class_exists('\Lackey\Lackey')) {
+$TextUIClass = '\Lackey\TextUI\Command';
+
+if (!class_exists($TextUIClass)) {
     throw new Exception('Autoloader not included in lackeyfile');
 }
 
-$lackey = \Lackey\Lackey::getInstance();
-
-if (isset($opts['T'])) {
-    echo '-T option received.  Listing available tasks.' . PHP_EOL . PHP_EOL;
-    foreach ($lackey->getDescriptions() as $task => $spec) {
-        $description = $spec['description'];
-        $subtasks    = $spec['subtasks'];
-        echo "$task\t\t$description" . PHP_EOL;
-        if (!empty($subtasks)) {
-            foreach ($subtasks as $subTask) {
-                echo "$task:$subTask" . PHP_EOL;
-            }
-        }
-    }
-    echo PHP_EOL;
-    exit(0);
-}
-
-
-if ($lackey === null) {
-    throw new Exception('Lackey was not initialized in lackeyfile');
-}
-
-$task = isset($argv[1]) ? $argv[1] : 'default';
-
-$c    = new \Colors\Color();
-
-try {
-    $lackey->run($task);
-} catch (\Lackey\TaskNotFoundException $e) {
-    echo $c('Error: ' . $e->getMessage())->red();
-    echo PHP_EOL . PHP_EOL;
-}
+$TextUIClass::main();

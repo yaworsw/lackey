@@ -25,7 +25,7 @@ class TaskRunner
         $this->{'run' . ($task instanceof MultiTaskInterface ? 'Multi' : 'Single') . 'Task'}($task, $options);
     }
 
-    protected function runSingleTask(Task $task, $options, $taskName = null)
+    protected function announceRunningTask($task, $options, $taskName = null)
     {
         if (!$this->options['silent'] && !$this->options['quiet']) {
             if (is_null($taskName)) {
@@ -34,13 +34,28 @@ class TaskRunner
             $c = new Color();
             echo $c("Running \"$taskName\" task")->underline() . PHP_EOL . PHP_EOL;
         }
+    }
+
+    protected function silence()
+    {
         if ($this->options['silent'] || $this->options['squelch']) {
             ob_start();
         }
-        $task->run($options, $this->options);
+    }
+
+    protected function unsilence()
+    {
         if ($this->options['silent'] || $this->options['squelch']) {
             ob_end_clean();
         }
+    }
+
+    protected function runSingleTask(Task $task, $options, $taskName = null)
+    {
+        $this->announceRunningTask($task, $options, $taskName);
+        $this->silence();
+        $task->run($options, $this->options);
+        $this->unsilence();
     }
 
     protected function runMultiTask(MultiTaskInterface $task, $options)

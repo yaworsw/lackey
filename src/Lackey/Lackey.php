@@ -145,7 +145,11 @@ class Lackey
         $task    = $this->getTask($def);
         $options = $this->getTaskOptions($def);
 
-        $taskRunner->run($task, $options);
+        $result  = $taskRunner->run($task, $options);
+
+        return is_null($result)
+             ? new Task\PositiveResult
+             : $result;
     }
 
     public function __call($name, $args)

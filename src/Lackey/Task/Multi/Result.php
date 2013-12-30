@@ -2,26 +2,25 @@
 
 namespace Lackey\Task\Multi;
 
-use Lackey\Task\ResultInterface;
+use Lackey\Task;
 
-class Result implements ResultInterface
+class Result extends Task\AbstractResult
 {
 
-    protected $results;
+    protected $results = array();
 
-    public function __construct($results)
-    {
-        $this->results = $results;
-    }
+    protected $status  = 0;
 
-    public function getStatus()
+    public function add(Task\ResultInterface $r = null)
     {
-        foreach ($this->results as $result) {
-            $status = $result->getStatus();
-            if ($status !== 0) {
-                return $status;
+        if (!is_null($r)) {
+            $this->results[] = $r;
+            if ($this->status === 0) {
+                $status = $r->getStatus();
+                if ($status !== 0) {
+                    $this->status = $status;
+                }
             }
         }
-        return 0;
     }
 }

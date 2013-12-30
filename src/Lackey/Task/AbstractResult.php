@@ -2,7 +2,7 @@
 
 namespace Lackey\Task;
 
-class AbstractResult
+class AbstractResult extends Result
 {
 
     public function getStatus()

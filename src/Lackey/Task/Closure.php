@@ -2,7 +2,7 @@
 
 namespace Lackey\Task;
 
-use Lackey\Task\Closure\Result;
+use Lackey\Task\Closure\Result as ClosureResult;
 
 /**
  * A task which wraps a closure.
@@ -38,9 +38,9 @@ class Closure extends AbstractTask
             if (is_null($result)) {
                 $result = 0;
             }
-            return new Result($result);
+            return new ClosureResult($result);
         } catch (\Exception $ex) {
-            return new Result(1, $ex->getMessage());
+            return new ClosureResult(1, $ex->getMessage());
         }
     }
 }

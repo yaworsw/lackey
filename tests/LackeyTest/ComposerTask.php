@@ -7,7 +7,7 @@ use Lackey\Task\AbstractTask;
 class ComposerTask extends AbstractTask
 {
 
-    public function run(array $options = array())
+    public function run(array $options = array(), array $runOptions = array())
     {
 
     }

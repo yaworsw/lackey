@@ -8,17 +8,36 @@ use Lackey\Task;
 class LackyTest extends AbstractTestCase
 {
 
-    public function testSubTask()
+    public function testMultipleSubTasks()
     {
-        $lackey = new Lackey(array('silent' => true));
+        $lackey = new Lackey(array('quiet' => true));
         $lackey->loadTask(new Task\Exec(), array(
-            'ls' => array(
+            'quiet' => array(
                 'command' => 'ls',
                 'echo'    => false
             ),
+            'ls' => array(
+                'command' => 'ls'
+            ),
         ));
-        $lackey->run('exec:ls');
-        $this->assertTrue(true);
+        $this->expectOutputString('');
+        $lackey->run('exec:quiet');
+    }
+
+    public function testSpecificSubTask()
+    {
+        $lackey = new Lackey(array('quiet' => true));
+        $lackey->loadTask(new Task\Exec(), array(
+            'quiet' => array(
+                'command' => 'ls',
+                'echo'    => false
+            ),
+            'ls' => array(
+                'command' => 'ls'
+            ),
+        ));
+        $this->expectOutputString('');
+        $lackey->run('exec:quiet');
     }
 
     public function testLoadTask()

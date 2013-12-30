@@ -26,7 +26,7 @@ class Exec extends AbstractMultiTask
     /**
      * Runs a given shell command.
      */
-    public function run(array $options = array())
+    public function run(array $options = array(), array $runOptions = array())
     {
         $options = array_replace_recursive($this->defaults, $options);
 

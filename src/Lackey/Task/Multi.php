@@ -17,11 +17,11 @@ class Multi extends AbstractTask
         $this->description = $description;
     }
 
-    public function run(array $options = array())
+    public function run(array $taskOptions = array(), array $runOptions = array())
     {
         $lackey = Lackey::getInstance();
-        foreach ($options as $task) {
-            $lackey->run($task);
+        foreach ($taskOptions as $task) {
+            $lackey->run($task, $runOptions);
         }
     }
 }

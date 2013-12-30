@@ -29,8 +29,8 @@ class Closure extends AbstractTask
         $this->closure     = $closure;
     }
 
-    public function run(array $options = array())
+    public function run(array $taskOptions = array(), array $runOptions = array())
     {
-        call_user_func($this->closure, $options);
+        call_user_func($this->closure, $taskOptions, $runOptions);
     }
 }

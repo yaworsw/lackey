@@ -10,6 +10,9 @@ $lackey->loadTask(new Task\Exec(), array(
     'phpunit' => array(
         'command' => 'vendor/bin/phpunit -c tests/phpunit.xml',
     ),
+    'ls' => array(
+        'command' => 'ls',
+    ),
 ));
 
 $lackey->task('say-hello', 'Says hello to the world.  But really just to yourself.', function () {

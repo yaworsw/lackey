@@ -33,35 +33,6 @@ class Lackey
         return self::$instance;
     }
 
-    private static function notNumeric($in)
-    {
-        return !is_numeric($in);
-    }
-
-    public function getDescriptions()
-    {
-        $descriptions = array();
-        foreach ($this->tasks as $name => $task) {
-            $descriptions[$name] = array(
-                'subtasks'    => $this->getSubTasks($name),
-                'description' => $task->getDescription(),
-            );
-        }
-        ksort($descriptions);
-        return $descriptions;
-    }
-
-    public function getSubTasks($task, $filter = true)
-    {
-        $subtasks = array_keys($this->options[$task]);
-        if ($filter) {
-            $filterFunction = $filter === true ? array($this, 'notNumeric') : $filter;
-            $subtasks       = array_filter($subtasks, $filterFunction);
-        }
-        sort($subtasks);
-        return $subtasks;
-    }
-
     /**
      * Create an alias which can refer to multiple other tasks.
      */
@@ -102,48 +73,86 @@ class Lackey
         $this->loadTask($task, $options);
     }
 
-    /**
-     * Runs a task.
-     */
+    private static function notNumeric($in)
+    {
+        return !is_numeric($in);
+    }
+
+    public function getDescriptions()
+    {
+        $descriptions = array();
+        foreach ($this->tasks as $name => $task) {
+            $descriptions[$name] = array(
+                'subtasks'    => $this->getSubTasks($name),
+                'description' => $task->getDescription(),
+            );
+        }
+        ksort($descriptions);
+        return $descriptions;
+    }
+
+    protected static function taskDefenition($taskName)
+    {
+        if (is_array($taskName)) {
+            return $taskName;
+        }
+        $exploded = explode(':', $taskName);
+        $result   = array(
+            'task' => $exploded[0],
+        );
+        if (isset($exploded[1])) {
+            $result['sub'] = $exploded[1];
+        }
+        return $result;
+    }
+
+    public function getTask($taskName)
+    {
+        $def = self::taskDefenition($taskName);
+        if (!isset($this->tasks[$def['task']])) {
+            throw new TaskNotFoundException("The task \"$taskName\" was not found");
+        }
+        return $this->tasks[$def['task']];
+    }
+
+    public function getTaskOptions($taskName)
+    {
+        $def     = self::taskDefenition($taskName);
+        $options = $this->options[$def['task']];
+        if (isset($def['sub'])) {
+            if (!isset($options[$def['sub']])) {
+                $taskName = implode(':', $def);
+                throw new TaskNotFoundException("Task configuration for the task \"$taskName\" was not found");
+            }
+            $options = $options[$def['sub']];
+        } else if (isset($options[0])) {
+            $options = $options[0];
+        }
+        return $options;
+    }
+
     public function run($taskName, array $runOptions = array())
     {
         $runOptions = array_replace_recursive($this->runOptions, $runOptions);
 
-        $c = new Color();
+        $def     = self::taskDefenition($taskName);
+        $task    = $this->getTask($taskName);
+        $options = $this->getTaskOptions($taskName);
 
-        if (!$runOptions['silent'] && !$runOptions['quiet']) {
-            echo $c("Running \"$taskName\" task")->underline() . PHP_EOL . PHP_EOL;
-        }
-
-        if (strpos($taskName, ':') !== false) {
-            $temp     = explode(':', $taskName);
-            $taskName = $temp[0];
-        }
-
-        if (!isset($this->tasks[$taskName])) {
-            throw new TaskNotFoundException("Task \"$taskName\" was not found");
-        }
-
-        $task     = $this->tasks[$taskName];
-        $subtasks = $this->getSubTasks($taskName, false);
-
-        if ($runOptions['silent'] || $runOptions['squelch']) {
-            ob_start();
-        }
-
-        if (count($subtasks) === 0) {
-            $options = $this->options[$taskName];
-            $task->run($options);
+        if ($task instanceof MultiTaskInterface && !isset($def['sub'])) {
+            $this->execMultiTask($task, $options, $runOptions);
         } else {
-            foreach ($subtasks as $subtask) {
-                $options = $this->options[$taskName][$subtask];
-                $task->run($options);
-            }
+            $task->run($options, $runOptions);
         }
+    }
 
-        if ($runOptions['silent'] || $runOptions['squelch']) {
-            ob_end_clean();
+    public function execMultiTask(MultiTaskInterface $task, array $options = array(), array $runOptions = array())
+    {
+        $taskName = $task->getName();
+        $subtasks = array_keys($this->options[$taskName]);
+        sort($subtasks);
+        foreach ($subtasks as $subTask) {
+            $task->run($options[$subTask], $runOptions);
         }
-
     }
 }

@@ -18,5 +18,5 @@ interface TaskInterface
     /**
      * Runs the task.  Options are given to configure execution.
      */
-    public function run(array $options = array());
+    public function run(array $taskOptions = array(), array $runOptions = array());
 }

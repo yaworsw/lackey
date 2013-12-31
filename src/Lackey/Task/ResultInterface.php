@@ -6,4 +6,6 @@ interface ResultInterface
 {
 
     public function getStatus();
+
+    public function isError();
 }

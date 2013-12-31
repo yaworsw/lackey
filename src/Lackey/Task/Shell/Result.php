@@ -20,6 +20,16 @@ class Result extends AbstractResult
         $this->stderr = $stderr;
     }
 
+    /* to an array that can be used when calling call user func array */
+    public function toCufa()
+    {
+        return array(
+            $this->stdout,
+            $this->stderr,
+            $this->status
+        );
+    }
+
     public function isError()
     {
         return !($this->status === 0);

@@ -12,11 +12,7 @@ abstract class AbstractShellTask extends AbstractTask
     {
         $command = new Command($config);
         $result  = $command->run();
-        $cufa    = array(
-            $result->stdout,
-            $result->stderr,
-            $result->status
-        );
+        $cufa    = $result->toCufa();
         $userFunctions = array(
             $result->isError() ? 'error' : 'success',
             'complete',

@@ -2,9 +2,9 @@
 
 namespace Lackey\Task\Closure;
 
-use Lackey\Task\ResultInterface;
+use Lackey\Task\AbstractResult;
 
-class Result implements ResultInterface
+class Result extends AbstractResult
 {
 
     protected $result;

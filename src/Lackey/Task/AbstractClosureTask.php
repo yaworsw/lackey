@@ -11,7 +11,7 @@ abstract class AbstractClosureTask extends AbstractTask
     protected $description;
     protected $closure;
 
-    public function __construct($name, $description, \Closure $closure = null)
+    public function __construct($name, $description, $closure = null)
     {
         if (is_null($closure)) {
             if (is_callable($description)) {

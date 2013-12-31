@@ -2,6 +2,7 @@
 
 namespace LackeyTest\Task;
 
+use Lackey\Lackey;
 use Lackey\Task\Closure;
 use LackeyTest\AbstractTestCase;
 
@@ -23,5 +24,13 @@ class ClosureTest extends AbstractTestCase
         });
         $this->expectOutputString('foo');
         $exec->run(array());
+    }
+
+    public function testShouldAcceptCalliable()
+    {
+        $lackey = new Lackey(array('quiet' => true));
+        $lackey->task('is_int', 'is_int', 'is_int');
+        $lackey->run('is_int');
+        $this->assertTrue(true);
     }
 }

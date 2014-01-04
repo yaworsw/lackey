@@ -1,19 +1,28 @@
 {
-  "name": "yaworsw/lackey",
-  "version": "0.1.0",
+  "name": "lackey/lackey",
+  "type": "library",
+  "version": "0.1.1",
   "description": "Task runner for PHP",
   "keywords": [
     "automation",
     "build",
     "task"
   ],
+  "homepage": "http://github.com/yaworsw/lackey",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Will Yaworsky",
+      "email": "wj.px01@gmail.com"
+    }
+  ],
   "require": {
     "php":                        ">=5.3",
     "kevinlebrun/colors.php":     "0.3.0"
   },
   "require-dev": {
-    "phpunit/phpunit":           "3.7.*",
-    "phpunit/php-code-coverage": "*"
+    "phpunit/phpunit":            "3.7.*",
+    "phpunit/php-code-coverage":  "*"
   },
   "autoload": {
     "psr-0": {

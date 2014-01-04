@@ -8,10 +8,28 @@ PHP task runner
 [![Dependencies Status](https://depending.in/yaworsw/lackey.png)](http://depending.in/yaworsw/lackey)
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/yaworsw/lackey/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
-## Getting Started
+## Installing
 
-### Installing
+Make sure you have `~/.composer/vendor/bin/` in your path.
 
-### Lackeyfile
+Install lackey globally.
 
-## Plugins
+    composer global require lackey/lackey
+
+Add lackey to your project's `composer.json` file.
+
+    {
+        "require-dev": {
+            "lackey/lackey": "0.1.0"
+        }
+    }
+
+Update the project's dependencies.
+
+    composer update
+
+## Lackeyfile
+
+The Lackeyfile is where all of your project's lackey tasks are defined.  In the root of your project create a file named `Lackeyfile.php`.
+
+Use this project's [Lackeyfile](Lackeyfile.php) as a guide on how to define lackey tasks.

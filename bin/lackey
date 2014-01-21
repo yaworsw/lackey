@@ -34,4 +34,6 @@ if (!class_exists($TextUIClass)) {
     throw new Exception('Autoloader not included in lackeyfile');
 }
 
-$TextUIClass::main();
+$result = $TextUIClass::main();
+
+exit($result);

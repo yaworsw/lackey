@@ -34,10 +34,11 @@ class Command
         if (is_null($argv)) {
             $argv = $_SERVER['argv'];
         }
-        $task = isset($argv[1]) ? $argv[1] : 'default';
-        $opts = call_user_func('getopt', implode('', static::$optOptions), static::$optLongopts);
+        $task    = isset($argv[1]) ? $argv[1] : 'default';
+        $opts    = call_user_func('getopt', implode('', static::$optOptions), static::$optLongopts);
         $command = new static($task, $opts);
-        $command->run();
+        $status  = $command->run();
+        return $status;
     }
 
     public static function getLackeyInstance()
@@ -68,12 +69,15 @@ class Command
 
     public function run()
     {
+        $status = 0;
         if ($this->isOptSet('T')) {
             static::printTasks();
         } else {
             $lackey = static::getLackeyInstance();
-            $lackey->run($this->task);
+            $result = $lackey->run($this->task);
+            $status = $result->getStatus();
         }
+        return $status;
     }
 
     public function isOptSet($name)

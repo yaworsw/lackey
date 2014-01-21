@@ -36,4 +36,8 @@ if (!class_exists($TextUIClass)) {
 
 $result = $TextUIClass::main();
 
+if ($result == 255) {
+    $result = 254;
+}
+
 exit($result);

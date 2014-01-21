@@ -25,7 +25,7 @@ class LackyTest extends AbstractTestCase
         $out = $this->captureOut(function () use ($lackey) {
             $lackey->run('test');
         });
-        $this->assertContains('s12', $out);
+        $this->assertContains('12', $out);
     }
 
     public function testMultipleSubTasks()
